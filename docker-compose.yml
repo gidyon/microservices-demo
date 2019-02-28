@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  db:
+    image: "redis:latest"
+    container_name: redis
+    volumes:
+      - data:/data
+    networks:
+      capp-net:
+
+  web:
+    build: ./counter-app
+    ports:
+      - "8080:8080"
+      - "8090:8080"
+    networks:
+      - capp-net
+
+networks:
+  capp-net:
+    driver: overlay
+
+volumes:
+  data:
